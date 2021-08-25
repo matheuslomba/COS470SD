@@ -11,11 +11,7 @@
 using namespace std;
 
 // Gera um número aleatório delta pedido no trabalho
-int8_t ran(){
-   
-    /*srand(time(NULL));
-    int r = rand() % 100;
-    return r;*/
+int8_t ran200(){
 
     //Faz o número gerado ser diferente a cada vez que o programa roda    
     std::random_device dev;
@@ -27,7 +23,37 @@ int8_t ran(){
 
     //Peguei esse método do link a seguir:
         //https://stackoverflow.com/questions/13445688/how-to-generate-a-random-number-in-c
-    //Tinha utilizado antes o método rand() %200, mas sempre gerava os mesmos valores independentemente de quantas vezes eu rodasse a aplicação, então procurei uma forma de resolver esse problema.
 
    
-}  
+}
+
+int ran107(){
+    //Faz o número gerado ser diferente a cada vez que o programa roda    
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist107(1,10000000);
+    
+    //Gera um número aleatório
+    return dist107(rng);
+
+    //Peguei esse método do link a seguir:
+        //https://stackoverflow.com/questions/13445688/how-to-generate-a-random-number-in-c
+ 
+}    
+
+bool e_primo(int x){
+    int count = 0;
+    int i;
+    for (i = 2; i <= x; i++){
+        if (x%i==0){
+            count++;
+        }
+    }
+    if(count==1){
+        return true;
+    }
+    else{
+        return false;
+    }
+    return 0;
+}

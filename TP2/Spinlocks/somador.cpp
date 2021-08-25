@@ -48,9 +48,9 @@ int main () {
     FILE *rspinlock = fopen("r_spinlock.csv", "w");
     fprintf(rspinlock,"N, K, Somatório, Tempo médio\n");
 
-    const int n = 10000000;
+    //const int n = 10000000;
     //const int n = 100000000;
-    //const int n = 1000000000;
+    const int n = 1000000000;
 
     cout << "N = 10^" << log10(n) << endl;
 
@@ -60,8 +60,8 @@ int main () {
 
     for (int v = 0; v < n; v++) {
         
-        //Gera um número aleatório entre [-100,100]
-        vetor[v] = ran() - 100;
+        //Gera um número aleatório entre [ -100,100 ]
+        vetor[v] = ran200() - 100;
 
     }
 
@@ -75,9 +75,9 @@ int main () {
         int tamanho = ceil(n/double(k));
         std::thread threads[k];
 
-        int tempo_medio = 0;
+        
         for (int m = 0; m < 10; m++) {
-
+            int tempo_medio = 0;
             for (int t = 0; t < k; t++) {
                 threads[t] = std::thread(somaVetor, vetor, (t*tamanho), ((t+1)*tamanho));
             }
