@@ -94,7 +94,7 @@ int main () {
     std::thread threadsP[Np];
     std::thread threadsC[Nc];
 
-    //for (int m = 0; m < 10; m++) {
+    for (int m = 0; m < 10; m++) {
         int tempo_medio = 0;
         for (int tp = 0; tp < Np; tp++) {
             threadsP[tp] = std::thread(Produtor);
@@ -121,7 +121,7 @@ int main () {
         cout << "Em N = " << N << ", com " << Np << " threads produtor e " << Nc << " threads consumidor, o programa foi executado em " << double(tempo_medio)/CLOCKS_PER_SEC << " segundos." << endl;
 
         cout << "-------------------------------------------" << endl;
-    //}
+    }
     
     return 0;
 }
