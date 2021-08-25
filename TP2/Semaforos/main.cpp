@@ -16,17 +16,18 @@
 
 
 using namespace std;
-
+//Definição de semáforos 
 sem_t controlSemaphore;
 sem_t control_1_Semaphore;
 sem_t countSemaphore;
-
+//Definição da fila
 queue<int> fila;
 int ii;
 
+//As threads vão gerar 100000 números e vão botar na fila. O wait(countSempahore) vai diminuir 1 de N. O wait(controlSemaphore) vai garantir que apenas uma thread esteja em contato com a fila. O post(control_1_Semaphore) vai garantir que a thread nenhuma thread consumidora vai tentar puxar da fila sem ter nenhum número
 void Produtor() {
     
-    for(int i=0;i<1000;i++){
+    for(int i=0;i<100000;i++){
         //escrever numero na memoria 
         sem_wait(&countSemaphore);
         
@@ -39,11 +40,12 @@ void Produtor() {
     }
 }
 
-void Consumidor() {
-    //ler na memoria
+
+//As threads vão gerar ler os números e tirá-los da fila. O post(countSempahore) vai aumentar 1 de N. O wait(controlSemaphore) vai garantir que apenas uma thread esteja em contato com a fila. O wait(control_1_Semaphore) vai garantir que a thread nenhuma thread consumidora vai tentar puxar da fila sem ter nenhum número
+
+void Consumidor() {    
     
-    
-    while( ii<1000){
+    while( ii<100000){
     
         sem_wait(&control_1_Semaphore);
 
@@ -74,6 +76,7 @@ int main () {
 
     long tempo_inicial = time(NULL);
     int N;
+    //Iniciando os semáforos
     printf("Defina o tamanho da fila: ");
     scanf("%d", &N);
     sem_init(&countSemaphore, 1, N);
@@ -81,18 +84,18 @@ int main () {
     sem_init(&controlSemaphore, 1, 1);
     
     cout << N << endl;;
-
+    //escrevendo a quantidade de threads produtoras
     int Np;
     printf("Selecione a quantidade de threads produtoras a serem gerados: ");
     scanf("%d", &Np);
-
+    //escrevendo a quantidade de threads consumidoras
     int Nc;
     printf("Selecione a quantidade de threads consumidores a serem gerados: ");
     scanf("%d", &Nc);
-    
+    //Definindo o tamanho dessas threads
     std::thread threadsP[Np];
     std::thread threadsC[Nc];
-
+    //Criando cada uma dessas threads
     long tempo_medio = 0.000;
     for (int tp = 0; tp < Np; tp++) {
         threadsP[tp] = std::thread(Produtor);
@@ -102,21 +105,13 @@ int main () {
     }
     
     
-    
+    //Ativando cada uma dessas threads
     for (int tp = 0; tp < Np; tp++) {
         threadsP[tp].join();
     }
     for (int tc = 0; tc < Nc; tc++) {
         threadsC[tc].join();
     }
-
-    
-
-    //Envia os dados para um arquivo csv, para facilitar o estudo de caso 
-    //fprintf(rspinlock,"%d, %d, %d, %lf\n", n, k, somaTotal, double(tempo_medio)/CLOCKS_PER_SEC);
-
-    //cout << "Em K = " << k << " foi encontrado um somatório final de " << int(somaTotal) << ", executado em " << double(tempo_medio)/CLOCKS_PER_SEC << " segundos." << endl;
-    //somaTotal = 0;
     
     cout << "-------------------------------------------" << endl;
     //}
