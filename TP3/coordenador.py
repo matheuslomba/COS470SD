@@ -64,7 +64,7 @@ def interface():
         if userresp==1:
             print(fifoMessages)
         elif userresp==2:
-            print(timesProcess)
+            print(timesProcess())
         else:
             os.abort()
 
