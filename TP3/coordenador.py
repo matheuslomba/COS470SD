@@ -49,6 +49,7 @@ def timesProcess():
     a=np.ones((2,32),float)
     for i in range(1,33):
         a[0][i-1]=i
+        a[1][i-1]=0
     for j in range(0,len(a)):
         for w in auxlist:
             if w[2]==j+1:
